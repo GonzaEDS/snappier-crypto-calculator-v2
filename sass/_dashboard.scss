@@ -13,6 +13,9 @@ tbody tr:hover {
 .current_price::before, .ath::before {
     content: "$";
 }
+.ath_change_percentage::after {
+    content: "%"
+}
 
 .displayNone {
     display: none!important;

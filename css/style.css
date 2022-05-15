@@ -20395,6 +20395,10 @@ tbody tr:hover {
   content: "$";
 }
 
+.ath_change_percentage::after {
+  content: "%";
+}
+
 .displayNone {
   display: none !important;
 }
