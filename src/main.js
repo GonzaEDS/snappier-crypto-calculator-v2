@@ -29,8 +29,8 @@ let renderTable = async () => {
           this.total_supply = total_supply
           this.ath = ath
           this.ath_change_percentage = ath_change_percentage
-          ;(this.circulating_supply = circulating_supply),
-            (this.market_cap_rank = market_cap_rank)
+          this.circulating_supply = circulating_supply
+          this.market_cap_rank = market_cap_rank
         }
         getPrice() {
           fetch(
@@ -81,6 +81,7 @@ let renderTable = async () => {
           coinObjects.sort(
             (a, b) => b.circulating_supply - a.circulating_supply
           )
+          break
         case 'marketCap':
           coinObjects.sort((a, b) => a.market_cap_rank - b.market_cap_rank)
           break
