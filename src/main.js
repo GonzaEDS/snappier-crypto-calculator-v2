@@ -1,4 +1,35 @@
 import 'bootstrap'
+class Coin {
+  constructor(
+    id,
+    name,
+    symbol,
+    current_price,
+    image,
+    total_supply,
+    ath,
+    ath_change_percentage,
+    circulating_supply,
+    market_cap_rank
+  ) {
+    this.id = id
+    this.name = name
+    this.symbol = symbol
+    this.current_price = current_price
+    this.image = image
+    this.total_supply = total_supply
+    this.ath = ath
+    this.ath_change_percentage = ath_change_percentage
+    this.circulating_supply = circulating_supply
+    this.market_cap_rank = market_cap_rank
+  }
+  async getPrice() {
+    this.current_price = await priceCall(this.id)
+  }
+}
+const coinObjects = []
+// función principal
+
 let renderTable = async () => {
   try {
     const response = await fetch(
@@ -7,44 +38,6 @@ let renderTable = async () => {
 
     if (response.status === 200) {
       // create custome coin objects
-      const coinObjects = []
-      class Coin {
-        constructor(
-          id,
-          name,
-          symbol,
-          current_price,
-          image,
-          total_supply,
-          ath,
-          ath_change_percentage,
-          circulating_supply,
-          market_cap_rank
-        ) {
-          this.id = id
-          this.name = name
-          this.symbol = symbol
-          this.current_price = current_price
-          this.image = image
-          this.total_supply = total_supply
-          this.ath = ath
-          this.ath_change_percentage = ath_change_percentage
-          this.circulating_supply = circulating_supply
-          this.market_cap_rank = market_cap_rank
-        }
-        getPrice() {
-          fetch(
-            `https://api.coingecko.com/api/v3/simple/price?ids=${this.id}&vs_currencies=usd`
-          )
-            .then(resp => resp.json())
-            .then(myPrice => {
-              this.current_price = JSON.stringify(
-                Object.values(myPrice)[0]['usd']
-              )
-              return this.price
-            })
-        }
-      }
 
       // get api data
       const datos = await response.json()
@@ -90,25 +83,26 @@ let renderTable = async () => {
           break
       }
 
-      console.log(coinObjects)
-
       const body = document.querySelector('.table-body')
       const tableHeadersArray = [
-        'name',
         'current_price',
         'ath',
         'ath_change_percentage',
         'circulating_supply',
         'market_cap_rank'
       ]
+
       coinObjects.forEach(coin => {
         let tableRow = document.createElement('tr')
         tableRow.classList.add(`${coin.id}`)
-        const logoTd = document.createElement('td')
+        const coinTd = document.createElement('td')
         const logoImg = document.createElement('img')
         logoImg.src = `${coin.image}`
-        logoTd.appendChild(logoImg)
-        tableRow.appendChild(logoTd)
+        coinTd.appendChild(logoImg)
+        const name = document.createTextNode(coin.name)
+
+        coinTd.appendChild(name)
+        tableRow.appendChild(coinTd)
         body.appendChild(tableRow)
 
         tableHeadersArray.forEach(header => {
@@ -162,3 +156,22 @@ document.querySelector('#sort').addEventListener('change', () => {
   })
   renderTable()
 })
+
+// functions
+async function priceCall(coinId) {
+  try {
+    const response = await fetch(
+      `https://api.coingecko.com/api/v3/simple/price?ids=${coinId}&vs_currencies=usd`
+    )
+
+    if (response.status === 200) {
+      const data = await response.json()
+      const price = data[Object.keys(data)[0]].usd
+      return price
+    } else if (response.status === 404) {
+      console.log('The requested data was not found')
+    }
+  } catch (error) {
+    console.log(error)
+  }
+}
