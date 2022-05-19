@@ -20601,6 +20601,7 @@ td img {
 
   tr.no-matches-row {
     text-align: left;
+    position: fixed;
   }
 }
 .road-svg {
