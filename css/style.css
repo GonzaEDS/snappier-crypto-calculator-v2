@@ -20598,6 +20598,10 @@ td img {
     left: 0;
     z-index: 2;
   }
+
+  tr.no-matches-row {
+    text-align: left;
+  }
 }
 .road-svg {
   width: 19rem;

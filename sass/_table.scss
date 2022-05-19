@@ -46,7 +46,7 @@ th:first-child, td:first-child {
     left: 0;
     z-index: 2;
     background-color: #222222;
-}
+  }
 
   .name {
     position: -webkit-sticky;
@@ -54,11 +54,11 @@ th:first-child, td:first-child {
     left: 0;
     z-index: 2;
   }
-
-
-    
-
+  tr.no-matches-row {
+    text-align: left;
   }
+
+}
 
 
   
