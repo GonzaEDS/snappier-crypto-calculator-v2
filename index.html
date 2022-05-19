@@ -61,15 +61,23 @@
         <section class="coins-table">
           <div class="page-header pt-5">           
             <h1>Dashboard</h1>
-            <label for="sort">Sort by:</label>
-            <select name="sort" id="sort">
-              <option value="marketCap">Market Cap</option>
-              <option value="price">Price</option>
-              <option value="ATH">ATH</option>
-              <option value="ATHchangepercentage">ATH change percentage</option>
-              <option value="circulatingSupply">Circulating Supply</option>
-              <option value="name">Name</option>    
-            </select>
+            <div class="table-tools">
+              <div class="sort-container">
+                <label for="sort">Sort by:</label>
+                <select name="sort" id="sort">
+                  <option value="marketCap">Market Cap</option>
+                  <option value="price">Price</option>
+                  <option value="ATH">ATH</option>
+                  <option value="ATHchangepercentage">ATH change percentage</option>
+                  <option value="circulatingSupply">Circulating Supply</option>
+                  <option value="name">Name</option>    
+                </select>
+              </div>
+              <div class="find-container">
+                <label for="filter">Find:</label>
+                <input type="text" name="filter" id="filter">
+              </div>
+            </div>
         </div>
 
             <div class="col-lg-12">

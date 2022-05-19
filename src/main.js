@@ -1,4 +1,8 @@
 import 'bootstrap'
+
+// Dashboard page
+
+//defines coins constructor
 class Coin {
   constructor(
     id,
@@ -27,9 +31,23 @@ class Coin {
     this.current_price = await priceCall(this.id)
   }
 }
-const coinObjects = []
-// función principal
 
+//coins list
+let coinObjects = []
+
+// DOM elements
+const dashboardCoinsTable = document.querySelector('.coins-table')
+const dashboardTableBody = document.querySelector('.table-body')
+const sortSelecor = document.querySelector('#sort')
+const dashboardFilter = document.querySelector('#filter')
+const calculator = document.querySelector('.calculator')
+const calcCoinLogo = document.querySelector('.coinLogo')
+const calcSelectedCoin = document.querySelector('.selectedCoin')
+const calcUserInput = document.querySelector('.coinInput')
+const calcResult = document.querySelector('.result')
+const calcReturnArrow = document.querySelector('.arrowSvg')
+
+// Render table function
 let renderTable = async () => {
   try {
     const response = await fetch(
@@ -37,8 +55,6 @@ let renderTable = async () => {
     )
 
     if (response.status === 200) {
-      // create custome coin objects
-
       // get api data
       const datos = await response.json()
       // instanciate coin objects
@@ -57,8 +73,8 @@ let renderTable = async () => {
         )
       })
 
-      let sortSelecor = document.querySelector('#sort').value
-      switch (sortSelecor) {
+      const sortSelecorValue = sortSelecor.value
+      switch (sortSelecorValue) {
         case 'price':
           coinObjects.sort((a, b) => b.current_price - a.current_price)
           break
@@ -83,7 +99,23 @@ let renderTable = async () => {
           break
       }
 
-      const body = document.querySelector('.table-body')
+      if (dashboardFilter.value) {
+        coinObjects = coinObjects.filter(e =>
+          e.name.toLowerCase().includes(dashboardFilter.value.toLowerCase())
+        )
+      }
+      if (coinObjects.length == 0) {
+        const tableRow = document.createElement('tr')
+        tableRow.classList.add('no-matches-row')
+        const msjTd = document.createElement('td')
+        msjTd.colSpan = 6
+        const message = document.createTextNode('No matches')
+
+        msjTd.appendChild(message)
+        tableRow.appendChild(msjTd)
+        dashboardTableBody.appendChild(tableRow)
+      }
+
       const tableHeadersArray = [
         'current_price',
         'ath',
@@ -93,7 +125,7 @@ let renderTable = async () => {
       ]
 
       coinObjects.forEach(coin => {
-        let tableRow = document.createElement('tr')
+        const tableRow = document.createElement('tr')
         tableRow.classList.add(`${coin.id}`)
         const coinTd = document.createElement('td')
         const logoImg = document.createElement('img')
@@ -103,7 +135,7 @@ let renderTable = async () => {
 
         coinTd.appendChild(name)
         tableRow.appendChild(coinTd)
-        body.appendChild(tableRow)
+        dashboardTableBody.appendChild(tableRow)
 
         tableHeadersArray.forEach(header => {
           let tableData = document.createElement('td')
@@ -113,30 +145,30 @@ let renderTable = async () => {
           tableRow.appendChild(tableData)
         })
 
-        body.appendChild(tableRow)
+        dashboardTableBody.appendChild(tableRow)
 
-        // let selectRow = document.querySelector(`.${coin.id}`)
         tableRow.addEventListener('click', () => {
-          console.log('click')
-          document.querySelector('.coinLogo').src = `${coin.image}`
-          document.querySelector('.selectedCoin').innerHTML = `${coin.name}`
-          document.querySelector('.coins-table').classList.add('displayNone')
-          document.querySelector('.calculator').classList.remove('displayNone')
-          let userInput = document.querySelector('.coinInput')
-          userInput.value = 1
+          calcCoinLogo.src = `${coin.image}`
+          calcSelectedCoin.innerHTML = `${coin.name}`
+          dashboardCoinsTable.classList.add('displayNone')
+          calculator.classList.remove('displayNone')
+          calcUserInput.value = 1
           const coinPrice = coin.current_price
-          let result = document.querySelector('.result')
-          result.innerHTML = `$ ${(coinPrice * userInput.value).toFixed(4)}`
+          calcResult.innerHTML = `$ ${(coinPrice * calcUserInput.value).toFixed(
+            2
+          )}`
+          // respond to any input change
           ;['click', 'keyup', 'change'].forEach(evento =>
-            userInput.addEventListener(evento, () => {
-              result.innerHTML = `$ ${(coinPrice * userInput.value).toFixed(4)}`
+            calcUserInput.addEventListener(evento, () => {
+              calcResult.innerHTML = `$ ${(
+                coinPrice * calcUserInput.value
+              ).toFixed(2)}`
             })
           )
-          document.querySelector('.arrowSvg').addEventListener('click', () => {
-            document.querySelector('.calculator').classList.add('displayNone')
-            document
-              .querySelector('.coins-table')
-              .classList.remove('displayNone')
+          // return to table
+          calcReturnArrow.addEventListener('click', () => {
+            calculator.classList.add('displayNone')
+            dashboardCoinsTable.classList.remove('displayNone')
           })
         })
       })
@@ -150,12 +182,28 @@ let renderTable = async () => {
 
 renderTable()
 
-document.querySelector('#sort').addEventListener('change', () => {
+sortSelecor.addEventListener('change', () => {
   document.querySelectorAll('td').forEach(e => {
     e.remove()
   })
   renderTable()
 })
+
+dashboardFilter.addEventListener('keyup', () => {
+  document.querySelectorAll('td').forEach(e => {
+    e.remove()
+  })
+  renderTable()
+})
+// ;['click', 'keyup', 'change'].forEach(evento =>
+//   dashboardFilter.addEventListener(evento, () => {
+//     console.log('change detected')
+//     document.querySelectorAll('td').forEach(e => {
+//       e.remove()
+//     })
+//     renderTable()
+//   })
+// )
 
 // functions
 async function priceCall(coinId) {

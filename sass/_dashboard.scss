@@ -5,10 +5,23 @@ td img {
     width: 1.5rem;
 }
 
-tbody tr:hover {
+tbody tr  {
     cursor: pointer;
+}
+
+tbody tr:hover {
     background-color: #645b5b;
 } 
+
+tr.no-matches-row {
+    font-size: calc(0.5rem + 2vw);
+    text-align: center;
+    background-color: transparent;
+    &:hover {
+        background-color: transparent;
+    }
+}
+
 
 .current_price::before, .ath::before {
     content: "$";
@@ -114,7 +127,7 @@ h1 {
     text-align: center;
 }
 
-select {
+select, #filter {
     word-wrap: normal;
     background: #5c5656;
     border-radius: 5px;
@@ -134,5 +147,13 @@ section.coins-table {
 
 .page-header {
     margin-bottom: 1rem;
+}
+
+.table-tools {
+    display: flex;
+    gap: calc(5vw - 0.5rem);
+    align-items: center;
+    justify-content: center;
+    flex-wrap: wrap;
 }
 
