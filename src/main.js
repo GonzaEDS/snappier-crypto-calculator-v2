@@ -183,14 +183,14 @@ let renderTable = async () => {
 renderTable()
 
 sortSelecor.addEventListener('change', () => {
-  document.querySelectorAll('td').forEach(e => {
+  document.querySelectorAll('tbody tr').forEach(e => {
     e.remove()
   })
   renderTable()
 })
 
 dashboardFilter.addEventListener('keyup', () => {
-  document.querySelectorAll('td').forEach(e => {
+  document.querySelectorAll('tbody tr').forEach(e => {
     e.remove()
   })
   renderTable()
