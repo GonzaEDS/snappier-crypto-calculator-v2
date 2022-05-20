@@ -20542,6 +20542,28 @@ section.coins-table {
   flex-wrap: wrap;
 }
 
+.table > :not(:first-child) {
+  border-top: 2px #e0e3e6;
+  border-top-style: groove;
+}
+
+thead tr {
+  text-transform: uppercase;
+  font-family: roboto;
+  font-size: 0.9rem;
+  color: #e0e3e6;
+  font-weight: 200 !important;
+}
+
+thead th {
+  font-weight: 100 !important;
+}
+
+tbody {
+  font-family: "Lato";
+  color: #e9ebee;
+}
+
 td img {
   margin-right: 1.5rem;
 }
