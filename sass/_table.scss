@@ -1,12 +1,21 @@
+.table {
+  border-color: #4d4d4d;
+}
+
 .table > :not(:first-child) {
   border-top: 2px #e0e3e6;
   border-top-style: groove;
 }
 
+th:first-child, td:first-child {
+  width: 22%;
+
+}
+
 thead tr {
   text-transform: uppercase;
   font-family: roboto;
-  font-size: 0.9rem;
+  font-size: 0.8rem;
   color: #e0e3e6;
   font-weight: 200!important;
 }
@@ -16,13 +25,23 @@ thead th {
 }
 
 tbody {
-  font-family: 'Lato';
+  font-family: "Lato";
   color: #e9ebee;
+  font-size: 0.9rem;
 }
 
 td img {
     margin-right: 1.5rem;
 }
+
+td.current_price {
+  width: 10%;
+}
+
+th:not(:first-child), td:not(:first-child)  {
+  text-align: right;
+}
+
 
 
   @media screen and (max-width:1000px) {

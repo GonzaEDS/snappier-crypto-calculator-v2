@@ -51,7 +51,7 @@ const calcReturnArrow = document.querySelector('.arrowSvg')
 let renderTable = async () => {
   try {
     const response = await fetch(
-      'https://api.coingecko.com/api/v3/coins/markets?vs_currency=usd&order=market_cap_desc&per_page=200&page=1&sparkline=true'
+      'https://api.coingecko.com/api/v3/coins/markets?vs_currency=usd&order=market_cap_desc&per_page=100&page=1&sparkline=true'
     )
 
     if (response.status === 200) {
@@ -195,15 +195,6 @@ dashboardFilter.addEventListener('keyup', () => {
   })
   renderTable()
 })
-// ;['click', 'keyup', 'change'].forEach(evento =>
-//   dashboardFilter.addEventListener(evento, () => {
-//     console.log('change detected')
-//     document.querySelectorAll('td').forEach(e => {
-//       e.remove()
-//     })
-//     renderTable()
-//   })
-// )
 
 // functions
 async function priceCall(coinId) {

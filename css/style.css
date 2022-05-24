@@ -49,7 +49,7 @@
   --bs-black-rgb: 0, 0, 0;
   --bs-body-color-rgb: 255, 255, 255;
   --bs-body-bg-rgb: 34, 34, 34;
-  --bs-font-sans-serif: system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", "Liberation Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
+  --bs-font-sans-serif: "Lato", sans-serif;
   --bs-font-monospace: SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
   --bs-gradient: linear-gradient(180deg, rgba(255, 255, 255, 0.15), rgba(255, 255, 255, 0));
   --bs-body-font-family: var(--bs-font-sans-serif);
@@ -11166,7 +11166,7 @@ textarea.form-control-lg {
   --bs-black-rgb: 0, 0, 0;
   --bs-body-color-rgb: 255, 255, 255;
   --bs-body-bg-rgb: 34, 34, 34;
-  --bs-font-sans-serif: system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", "Liberation Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
+  --bs-font-sans-serif: "Lato", sans-serif;
   --bs-font-monospace: SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
   --bs-gradient: linear-gradient(180deg, rgba(255, 255, 255, 0.15), rgba(255, 255, 255, 0));
   --bs-body-font-family: var(--bs-font-sans-serif);
@@ -20375,10 +20375,6 @@ progress {
     display: none !important;
   }
 }
-.table {
-  border-color: #4d4d4d;
-}
-
 .coin-logo {
   width: 10%;
 }
@@ -20525,6 +20521,9 @@ select:focus-visible, #filter:focus-visible {
 
 section.coins-table {
   margin-top: 2rem;
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
 }
 
 .page-header {
@@ -20542,15 +20541,29 @@ section.coins-table {
   flex-wrap: wrap;
 }
 
+.page-header h1, .page-header .h1 {
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+}
+
+.table {
+  border-color: #4d4d4d;
+}
+
 .table > :not(:first-child) {
   border-top: 2px #e0e3e6;
   border-top-style: groove;
 }
 
+th:first-child, td:first-child {
+  width: 22%;
+}
+
 thead tr {
   text-transform: uppercase;
   font-family: roboto;
-  font-size: 0.9rem;
+  font-size: 0.8rem;
   color: #e0e3e6;
   font-weight: 200 !important;
 }
@@ -20562,10 +20575,19 @@ thead th {
 tbody {
   font-family: "Lato";
   color: #e9ebee;
+  font-size: 0.9rem;
 }
 
 td img {
   margin-right: 1.5rem;
+}
+
+td.current_price {
+  width: 10%;
+}
+
+th:not(:first-child), td:not(:first-child) {
+  text-align: right;
 }
 
 @media screen and (max-width: 1000px) {
